@@ -26,9 +26,14 @@ function Table() {
       </thead>
 
       <tbody>
-
         { data.length === 0
-          ? 'Loading...'
+          ? (
+            <tr>
+              <td>
+                Loading...
+              </td>
+            </tr>
+          )
           : (data.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
