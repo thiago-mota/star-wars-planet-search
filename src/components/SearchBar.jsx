@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function SearchBar() {
@@ -12,6 +12,14 @@ function SearchBar() {
     setFilteredPlanet(result);
   };
 
+  useEffect(() => {
+    setFilteredPlanet(data);
+  }, [setFilteredPlanet, data]);
+
+  const column = ['population', 'orbital_period', 'diameter,',
+    'rotation_period', 'surface_water'];
+  // const valueRange = ['maior que', 'menor que', 'igual a'];
+
   return (
     <div>
       <h1> Projeto Star Wars - Trybe </h1>
@@ -22,6 +30,21 @@ function SearchBar() {
         data-testid="name-filter"
         onChange={ handleChange }
       />
+
+      <label htmlFor="column-filter">
+        Coluna
+        <select
+          data-testid="column-filter"
+          name="column-filter"
+          id="column-filter"
+        >
+          { column.map((filters) => (
+            <option key={ filters }>
+              { filters }
+            </option>
+          )) }
+        </select>
+      </label>
     </div>
   );
 }
