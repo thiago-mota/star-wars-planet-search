@@ -65,6 +65,13 @@ function SearchBar() {
         data-testid="value-filter"
         type="number"
       />
+
+      <button
+        type="button"
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
