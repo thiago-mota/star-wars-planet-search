@@ -18,7 +18,7 @@ function SearchBar() {
 
   const column = ['population', 'orbital_period', 'diameter,',
     'rotation_period', 'surface_water'];
-  // const valueRange = ['maior que', 'menor que', 'igual a'];
+  const valueRange = ['maior que', 'menor que', 'igual a'];
 
   return (
     <div>
@@ -41,6 +41,21 @@ function SearchBar() {
           { column.map((filters) => (
             <option key={ filters }>
               { filters }
+            </option>
+          )) }
+        </select>
+      </label>
+
+      <label htmlFor="comparison">
+        Operador
+        <select
+          name="comparison"
+          id="comparison"
+          data-testid="comparison-filter"
+        >
+          { valueRange.map((range) => (
+            <option key={ range }>
+              { range }
             </option>
           )) }
         </select>
