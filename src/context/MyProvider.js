@@ -9,6 +9,13 @@ function MyProvider({ children }) {
     filterByName: { name: '' },
   });
   const [filteredPlanet, setFilteredPlanet] = useState([]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }],
+  });
 
   const getPlanets = async () => {
     const result = await starWarsAPI();
@@ -25,6 +32,8 @@ function MyProvider({ children }) {
     setInput,
     filteredPlanet,
     setFilteredPlanet,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   return (

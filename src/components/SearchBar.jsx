@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function SearchBar() {
-  const { setInput, setFilteredPlanet, data } = useContext(MyContext);
+  const { setInput, setFilteredPlanet, data,
+    filterByNumericValues, setFilterByNumericValues } = useContext(MyContext);
 
-  const handleChange = ({ target: { value } }) => {
+  const handleInputChange = ({ target: { value } }) => {
     setInput({ filterByName: { name: value } });
 
     const result = data.filter((planet) => planet.name.toUpperCase()
@@ -12,12 +13,20 @@ function SearchBar() {
     setFilteredPlanet(result);
   };
 
+  const handleNumberChange = ({ target: { value } }) => {
+    setFilterByNumericValues({
+      filterByNumericValues: [{ ...filterByNumericValues
+        .filterByNumericValues[0],
+      value }],
+    });
+  };
+
   useEffect(() => {
     setFilteredPlanet(data);
   }, [setFilteredPlanet, data]);
 
-  const column = ['population', 'orbital_period', 'diameter,',
-    'rotation_period', 'surface_water'];
+  const columns = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
   const valueRange = ['maior que', 'menor que', 'igual a'];
 
   return (
@@ -28,7 +37,7 @@ function SearchBar() {
         name="search-input"
         id="search-input"
         data-testid="name-filter"
-        onChange={ handleChange }
+        onChange={ handleInputChange }
       />
 
       <label htmlFor="column-filter">
@@ -38,7 +47,7 @@ function SearchBar() {
           name="column-filter"
           id="column-filter"
         >
-          { column.map((filters) => (
+          { columns.map((filters) => (
             <option key={ filters }>
               { filters }
             </option>
@@ -64,6 +73,8 @@ function SearchBar() {
       <input
         data-testid="value-filter"
         type="number"
+        value={ filterByNumericValues.value }
+        onChange={ handleNumberChange }
       />
 
       <button
