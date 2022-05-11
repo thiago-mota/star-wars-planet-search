@@ -2,30 +2,49 @@ import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function SearchBar() {
-  const { setInput, setFilteredPlanet, data,
-    filterByNumericValues, setFilterByNumericValues } = useContext(MyContext);
+  const { setFilters, filters, data,
+    setFilteredPlanet } = useContext(MyContext);
 
-  const handleInputChange = ({ target: { value } }) => {
-    setInput({ filterByName: { name: value } });
+  const activeFilters = () => {
+    const { filterByNumericValues } = filters;
+    const { value, comparison, column } = filterByNumericValues[0];
 
-    const result = data.filter((planet) => planet.name.toUpperCase()
-      .includes(value.toUpperCase()));
+    const result = data.filter((planet) => {
+      if (comparison === 'maior que') {
+        return Number(value) > Number(planet[column]);
+      }
+      if (comparison === 'menor que') {
+        return Number(value) < Number(planet[column]);
+      }
+      if (comparison === 'igual a') {
+        return Number(value) === Number(planet[column]);
+      }
+    });
     setFilteredPlanet(result);
   };
 
-  const handleNumberChange = ({ target: { value } }) => {
-    setFilterByNumericValues({
-      filterByNumericValues: [{ ...filterByNumericValues
-        .filterByNumericValues[0],
-      value }],
-    });
+  const handleFilterChange = ({ target: { value, name } }) => {
+    if (name === 'name') {
+      setFilters({ ...filters, filterByName: { name: value } });
+      const result = data.filter((planet) => planet.name.toUpperCase()
+        .includes(value.toUpperCase()));
+      setFilteredPlanet(result);
+    } else {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [{
+          ...filters.filterByNumericValues[0],
+          [name]: value,
+        }],
+      });
+    }
   };
 
   useEffect(() => {
     setFilteredPlanet(data);
   }, [setFilteredPlanet, data]);
 
-  const columns = ['population', 'orbital_period',
+  const columnsOptions = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
   const valueRange = ['maior que', 'menor que', 'igual a'];
 
@@ -34,20 +53,21 @@ function SearchBar() {
       <h1> Projeto Star Wars - Trybe </h1>
       <input
         type="text"
-        name="search-input"
+        name="name"
         id="search-input"
         data-testid="name-filter"
-        onChange={ handleInputChange }
+        onChange={ handleFilterChange }
       />
 
       <label htmlFor="column-filter">
         Coluna
         <select
           data-testid="column-filter"
-          name="column-filter"
+          name="column"
           id="column-filter"
+          onChange={ handleFilterChange }
         >
-          { columns.map((filters) => (
+          { columnsOptions.map((filters) => (
             <option key={ filters }>
               { filters }
             </option>
@@ -61,6 +81,7 @@ function SearchBar() {
           name="comparison"
           id="comparison"
           data-testid="comparison-filter"
+          onChange={ handleFilterChange }
         >
           { valueRange.map((range) => (
             <option key={ range }>
@@ -72,14 +93,15 @@ function SearchBar() {
 
       <input
         data-testid="value-filter"
+        name="value"
         type="number"
-        value={ filterByNumericValues.value }
-        onChange={ handleNumberChange }
+        onChange={ handleFilterChange }
       />
 
       <button
         type="button"
         data-testid="button-filter"
+        onClick={ activeFilters }
       >
         Filtrar
       </button>

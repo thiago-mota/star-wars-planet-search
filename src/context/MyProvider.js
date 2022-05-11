@@ -5,17 +5,15 @@ import starWarsAPI from '../services/Star Wars';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
-  const [input, setInput] = useState({
+  const [filters, setFilters] = useState({
     filterByName: { name: '' },
-  });
-  const [filteredPlanet, setFilteredPlanet] = useState([]);
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
     filterByNumericValues: [{
       column: '',
       comparison: '',
       value: 0,
     }],
   });
+  const [filteredPlanet, setFilteredPlanet] = useState([]);
 
   const getPlanets = async () => {
     const result = await starWarsAPI();
@@ -28,12 +26,10 @@ function MyProvider({ children }) {
 
   const contextValue = {
     data,
-    input,
-    setInput,
+    filters,
+    setFilters,
     filteredPlanet,
     setFilteredPlanet,
-    filterByNumericValues,
-    setFilterByNumericValues,
   };
 
   return (
