@@ -60,6 +60,11 @@ function SearchBar() {
           )) }
         </select>
       </label>
+
+      <input
+        data-testid="value-filter"
+        type="number"
+      />
     </div>
   );
 }
