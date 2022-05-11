@@ -3,7 +3,6 @@ import MyContext from '../context/MyContext';
 
 function Table() {
   const { data } = useContext(MyContext);
-  console.log('data', data.length);
 
   return (
     <table>
