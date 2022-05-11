@@ -1,11 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function SearchBar() {
-  const { setFilterPlanets } = useContext(MyContext);
+  const { setInput, setFilteredPlanet, data } = useContext(MyContext);
 
   const handleChange = ({ target: { value } }) => {
-    setFilterPlanets({ filterByName: { name: value } });
+    setInput({ filterByName: { name: value } });
+
+    const result = data.filter((planet) => planet.name.toUpperCase()
+      .includes(value.toUpperCase()));
+    setFilteredPlanet(result);
   };
 
   return (
