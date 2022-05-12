@@ -3,22 +3,22 @@ import MyContext from '../context/MyContext';
 
 function SearchBar() {
   const { setFilters, filters, data,
-    setFilteredPlanet } = useContext(MyContext);
+    setFilteredPlanet, filteredPlanet } = useContext(MyContext);
 
   const activeFilters = () => {
     const { filterByNumericValues } = filters;
     const { value, comparison, column } = filterByNumericValues[0];
 
     if (comparison === 'maior que') {
-      setFilteredPlanet(data.filter((planet) => (
+      setFilteredPlanet(filteredPlanet.filter((planet) => (
         Number(value) < Number(planet[column]))));
     }
     if (comparison === 'menor que') {
-      setFilteredPlanet(data.filter((planet) => (
+      setFilteredPlanet(filteredPlanet.filter((planet) => (
         Number(value) > Number(planet[column]))));
     }
     if (comparison === 'igual a') {
-      setFilteredPlanet(data.filter((planet) => (
+      setFilteredPlanet(filteredPlanet.filter((planet) => (
         Number(value) === Number(planet[column]))));
     }
   };

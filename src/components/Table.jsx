@@ -3,7 +3,6 @@ import MyContext from '../context/MyContext';
 
 function Table() {
   const { filteredPlanet } = useContext(MyContext);
-  console.log(filteredPlanet);
 
   return (
     <table>
