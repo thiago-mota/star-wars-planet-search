@@ -9,19 +9,26 @@ function SearchBar() {
     const { filterByNumericValues } = filters;
     const { value, comparison, column } = filterByNumericValues[0];
 
-    const result = data.filter((planet) => {
-      if (comparison === 'maior que') {
-        return Number(value) > Number(planet[column]);
-      }
-      if (comparison === 'menor que') {
-        return Number(value) < Number(planet[column]);
-      }
-      if (comparison === 'igual a') {
-        return Number(value) === Number(planet[column]);
-      }
-    });
-    setFilteredPlanet(result);
+    if (comparison === 'maior que') {
+      setFilteredPlanet(data.filter((planet) => (
+        Number(value) < Number(planet[column]))));
+    }
+    if (comparison === 'menor que') {
+      setFilteredPlanet(data.filter((planet) => (
+        Number(value) > Number(planet[column]))));
+    }
+    if (comparison === 'igual a') {
+      setFilteredPlanet(data.filter((planet) => (
+        Number(value) === Number(planet[column]))));
+    }
   };
+
+  // const multipleFilters = () => {
+  //   const { filterByNumericValues } = filters;
+  //   const { value, comparison, column } = filterByNumericValues[0];
+
+  //   let result = data;
+  // };
 
   const handleFilterChange = ({ target: { value, name } }) => {
     if (name === 'name') {
@@ -67,9 +74,9 @@ function SearchBar() {
           id="column-filter"
           onChange={ handleFilterChange }
         >
-          { columnsOptions.map((filters) => (
-            <option key={ filters }>
-              { filters }
+          { columnsOptions.map((options) => (
+            <option key={ options }>
+              { options }
             </option>
           )) }
         </select>
@@ -93,6 +100,7 @@ function SearchBar() {
 
       <input
         data-testid="value-filter"
+        defaultValue={ 0 }
         name="value"
         type="number"
         onChange={ handleFilterChange }
