@@ -4,10 +4,9 @@ import MyContext from '../context/MyContext';
 function SearchBar() {
   const { setFilters, filters, data,
     setFilteredPlanet, filteredPlanet } = useContext(MyContext);
-
   const activeFilters = () => {
-    const { filterByNumericValues } = filters;
-    const { value, comparison, column } = filterByNumericValues[0];
+    const { filterByNumericValues, currentFilter } = filters;
+    const { value, comparison, column } = currentFilter[0];
 
     if (comparison === 'maior que') {
       setFilteredPlanet(filteredPlanet.filter((planet) => (
@@ -21,14 +20,17 @@ function SearchBar() {
       setFilteredPlanet(filteredPlanet.filter((planet) => (
         Number(value) === Number(planet[column]))));
     }
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filterByNumericValues,
+        currentFilter[0],
+      ],
+    });
+    console.log(filters);
+    // console.log(filterByNumericValues);
+    // console.log(currentFilter);
   };
-
-  // const multipleFilters = () => {
-  //   const { filterByNumericValues } = filters;
-  //   const { value, comparison, column } = filterByNumericValues[0];
-
-  //   let result = data;
-  // };
 
   const handleFilterChange = ({ target: { value, name } }) => {
     if (name === 'name') {
@@ -39,8 +41,8 @@ function SearchBar() {
     } else {
       setFilters({
         ...filters,
-        filterByNumericValues: [{
-          ...filters.filterByNumericValues[0],
+        currentFilter: [{
+          ...filters.currentFilter[0],
           [name]: value,
         }],
       });

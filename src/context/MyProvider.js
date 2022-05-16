@@ -7,7 +7,8 @@ function MyProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{
+    filterByNumericValues: [],
+    currentFilter: [{
       column: 'population',
       comparison: 'maior que',
       value: 0,
