@@ -27,10 +27,10 @@ function SearchBar() {
         currentFilter[0],
       ],
     });
-    console.log(filters);
     // console.log(filterByNumericValues);
     // console.log(currentFilter);
   };
+  console.log(filters);
 
   const handleFilterChange = ({ target: { value, name } }) => {
     if (name === 'name') {
