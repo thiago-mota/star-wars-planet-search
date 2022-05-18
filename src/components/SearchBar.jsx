@@ -30,19 +30,29 @@ function SearchBar() {
       ],
     });
 
-    const columnsFiltered = columnsOptions.filter((option) => {
-      const filtered = filters.filterByNumericValues.every((filter) => (
-        filter.column !== option
-      ));
-      return filtered;
-    });
-    setColumnsOptions(columnsFiltered);
     // console.log(columnsFiltered);
     // console.log('option', columnsOptions);
     // console.log(filterByNumericValues);
     // console.log(currentFilter);
   };
   // console.log(filters);
+
+  useEffect(() => {
+    function filteredColumns() {
+      const columnsFiltered = columnsOptions.filter((option) => {
+        const filtered = filters.filterByNumericValues.every((filter) => (
+          filter.column !== option
+        ));
+        // console.log(filtered);
+        console.log(filters);
+        return filtered;
+      });
+      if (columnsOptions.length !== columnsFiltered.length) {
+        setColumnsOptions(columnsFiltered);
+      }
+    }
+    filteredColumns();
+  }, [filters, setColumnsOptions, columnsOptions]);
 
   const handleFilterChange = ({ target: { value, name } }) => {
     if (name === 'name') {
