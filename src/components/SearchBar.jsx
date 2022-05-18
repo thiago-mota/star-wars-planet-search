@@ -44,7 +44,7 @@ function SearchBar() {
           filter.column !== option
         ));
         // console.log(filtered);
-        console.log(filters);
+        // console.log(filters);
         return filtered;
       });
       if (columnsOptions.length !== columnsFiltered.length) {
@@ -74,6 +74,14 @@ function SearchBar() {
   useEffect(() => {
     setFilteredPlanet(data);
   }, [setFilteredPlanet, data]);
+
+  const removeAllFilters = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [],
+    });
+    setFilteredPlanet(data);
+  };
 
   const valueRange = ['maior que', 'menor que', 'igual a'];
 
@@ -135,6 +143,15 @@ function SearchBar() {
       >
         Filtrar
       </button>
+
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ removeAllFilters }
+      >
+        Remover Filtros
+      </button>
+
     </div>
   );
 }
