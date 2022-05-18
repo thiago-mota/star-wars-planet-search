@@ -3,7 +3,9 @@ import MyContext from '../context/MyContext';
 
 function SearchBar() {
   const { setFilters, filters, data,
-    setFilteredPlanet, filteredPlanet } = useContext(MyContext);
+    setFilteredPlanet, filteredPlanet,
+    setColumnsOptions, columnsOptions } = useContext(MyContext);
+
   const activeFilters = () => {
     const { filterByNumericValues, currentFilter } = filters;
     const { value, comparison, column } = currentFilter[0];
@@ -27,10 +29,20 @@ function SearchBar() {
         currentFilter[0],
       ],
     });
+
+    const columnsFiltered = columnsOptions.filter((option) => {
+      const filtered = filters.filterByNumericValues.every((filter) => (
+        filter.column !== option
+      ));
+      return filtered;
+    });
+    setColumnsOptions(columnsFiltered);
+    // console.log(columnsFiltered);
+    // console.log('option', columnsOptions);
     // console.log(filterByNumericValues);
     // console.log(currentFilter);
   };
-  console.log(filters);
+  // console.log(filters);
 
   const handleFilterChange = ({ target: { value, name } }) => {
     if (name === 'name') {
@@ -53,8 +65,6 @@ function SearchBar() {
     setFilteredPlanet(data);
   }, [setFilteredPlanet, data]);
 
-  const columnsOptions = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
   const valueRange = ['maior que', 'menor que', 'igual a'];
 
   return (

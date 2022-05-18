@@ -15,6 +15,8 @@ function MyProvider({ children }) {
     }],
   });
   const [filteredPlanet, setFilteredPlanet] = useState([]);
+  const [columnsOptions, setColumnsOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
 
   const getPlanets = async () => {
     const result = await starWarsAPI();
@@ -31,6 +33,8 @@ function MyProvider({ children }) {
     setFilters,
     filteredPlanet,
     setFilteredPlanet,
+    columnsOptions,
+    setColumnsOptions,
   };
 
   return (
