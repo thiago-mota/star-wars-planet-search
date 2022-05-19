@@ -3,25 +3,10 @@ import MyContext from '../context/MyContext';
 
 function SearchBar() {
   const { setFilters, filters, data,
-    setFilteredPlanet, filteredPlanet,
-    setColumnsOptions, columnsOptions } = useContext(MyContext);
+    setFilteredPlanet, setColumnsOptions, columnsOptions } = useContext(MyContext);
 
   const activeFilters = () => {
     const { filterByNumericValues, currentFilter } = filters;
-    const { value, comparison, column } = currentFilter[0];
-
-    if (comparison === 'maior que') {
-      setFilteredPlanet(filteredPlanet.filter((planet) => (
-        Number(value) < Number(planet[column]))));
-    }
-    if (comparison === 'menor que') {
-      setFilteredPlanet(filteredPlanet.filter((planet) => (
-        Number(value) > Number(planet[column]))));
-    }
-    if (comparison === 'igual a') {
-      setFilteredPlanet(filteredPlanet.filter((planet) => (
-        Number(value) === Number(planet[column]))));
-    }
     setFilters({
       ...filters,
       filterByNumericValues: [
@@ -29,13 +14,7 @@ function SearchBar() {
         currentFilter[0],
       ],
     });
-
-    // console.log(columnsFiltered);
-    // console.log('option', columnsOptions);
-    // console.log(filterByNumericValues);
-    // console.log(currentFilter);
   };
-  // console.log(filters);
 
   useEffect(() => {
     function filteredColumns() {
@@ -43,8 +22,6 @@ function SearchBar() {
         const filtered = filters.filterByNumericValues.every((filter) => (
           filter.column !== option
         ));
-        // console.log(filtered);
-        // console.log(filters);
         return filtered;
       });
       if (columnsOptions.length !== columnsFiltered.length) {

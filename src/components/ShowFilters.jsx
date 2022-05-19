@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function ShowFilters() {
-  const { setFilters, filters, data,
-    setFilteredPlanet, filteredPlanet,
-    setColumnsOptions, columnsOptions } = useContext(MyContext);
+  const { setFilters, filters, setColumnsOptions,
+    columnsOptions } = useContext(MyContext);
 
   const handleClick = ({ column }) => {
     const { filterByNumericValues } = filters;
@@ -17,29 +16,7 @@ function ShowFilters() {
       ...filters,
       filterByNumericValues: removeSingleFilter,
     });
-
-    // console.log(column);
-    // let addPlanet = [];
-
-    // if (comparison === 'maior que') {
-    //   addPlanet = data.filter((planet) => (
-    //     Number(value) > Number(planet[column])));
-    // }
-    // if (comparison === 'menor que') {
-    //   addPlanet = data.filter((planet) => (
-    //     Number(value) < Number(planet[column])));
-    // }
-    // if (comparison === 'igual a') {
-    //   addPlanet = data.filter((planet) => (
-    //     Number(value) !== Number(planet[column])));
-    // }
-
-    // setFilteredPlanet([...filteredPlanet, ...addPlanet]);
     setColumnsOptions([...columnsOptions, column]);
-
-    // console.log(filteredPlanet);
-    // console.log('filteredPlanet', ...filteredPlanet);
-    // console.log('addPlanet', ...addPlanet);
   };
 
   return (

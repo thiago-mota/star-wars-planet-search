@@ -24,7 +24,9 @@ function Table() {
     setFilteredPlanet(testFilteredPlanets);
   }, [filterByNumericValues, data, setFilteredPlanet]);
 
-  // console.log(filteredPlanet);
+  /* Grande agradecimento ao Matheus Alves que me deu uma luz em relação a um erro no req 6.
+     resultado de nossa conversa foram as alterações dos filtros para um useEffect.
+  */
 
   return (
     <table>
