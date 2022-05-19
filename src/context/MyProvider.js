@@ -22,6 +22,7 @@ function MyProvider({ children }) {
     const result = await starWarsAPI();
     setData(result);
   };
+  // console.log(data);
 
   useEffect(() => {
     getPlanets();

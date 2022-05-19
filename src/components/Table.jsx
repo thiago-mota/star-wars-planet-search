@@ -1,8 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { filteredPlanet } = useContext(MyContext);
+  const { filters, filteredPlanet, data, setFilteredPlanet } = useContext(MyContext);
+  const { filterByNumericValues } = filters;
+
+  useEffect(() => {
+    let testFilteredPlanets = data;
+    filterByNumericValues.forEach((filter) => {
+      testFilteredPlanets = testFilteredPlanets.filter((planet) => {
+        if (filter.comparison === 'maior que') {
+          return Number(filter.value) < Number(planet[filter.column]);
+        } if (filter.comparison === 'menor que') {
+          return Number(filter.value) > Number(planet[filter.column]);
+        }
+        if (filter.comparison === 'igual a') {
+          return Number(filter.value) === Number(planet[filter.column]);
+        }
+
+        return testFilteredPlanets;
+      });
+    });
+    setFilteredPlanet(testFilteredPlanets);
+  }, [filterByNumericValues, data, setFilteredPlanet]);
+
+  // console.log(filteredPlanet);
 
   return (
     <table>

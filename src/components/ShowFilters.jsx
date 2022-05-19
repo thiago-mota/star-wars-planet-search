@@ -6,34 +6,40 @@ function ShowFilters() {
     setFilteredPlanet, filteredPlanet,
     setColumnsOptions, columnsOptions } = useContext(MyContext);
 
-  const handleClick = ({ column, comparison, value }) => {
+  const handleClick = ({ column }) => {
     const { filterByNumericValues } = filters;
 
     const removeSingleFilter = filterByNumericValues.filter((filter) => (
       filter.column !== column
     ));
+
     setFilters({
       ...filters,
       filterByNumericValues: removeSingleFilter,
     });
 
-    console.log(column);
-    let addPlanet = [];
+    // console.log(column);
+    // let addPlanet = [];
 
-    if (comparison === 'maior que') {
-      addPlanet = data.filter((planet) => (
-        Number(value) > Number(planet[column])));
-    }
-    if (comparison === 'menor que') {
-      addPlanet = data.filter((planet) => (
-        Number(value) < Number(planet[column])));
-    }
-    if (comparison === 'igual a') {
-      addPlanet = data.filter((planet) => (
-        Number(value) !== Number(planet[column])));
-    }
-    setFilteredPlanet([...filteredPlanet, ...addPlanet]);
+    // if (comparison === 'maior que') {
+    //   addPlanet = data.filter((planet) => (
+    //     Number(value) > Number(planet[column])));
+    // }
+    // if (comparison === 'menor que') {
+    //   addPlanet = data.filter((planet) => (
+    //     Number(value) < Number(planet[column])));
+    // }
+    // if (comparison === 'igual a') {
+    //   addPlanet = data.filter((planet) => (
+    //     Number(value) !== Number(planet[column])));
+    // }
+
+    // setFilteredPlanet([...filteredPlanet, ...addPlanet]);
     setColumnsOptions([...columnsOptions, column]);
+
+    // console.log(filteredPlanet);
+    // console.log('filteredPlanet', ...filteredPlanet);
+    // console.log('addPlanet', ...addPlanet);
   };
 
   return (
