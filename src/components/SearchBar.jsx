@@ -3,7 +3,7 @@ import MyContext from '../context/MyContext';
 
 function SearchBar() {
   const { setFilters, filters, data, setFilteredPlanet, setColumnsOptions,
-    columnsOptions, orderedData, setOrderedData, setData } = useContext(MyContext);
+    columnsOptions, orderedData, setData } = useContext(MyContext);
 
   const activeFilters = () => {
     const { filterByNumericValues, currentFilter } = filters;
@@ -69,7 +69,6 @@ function SearchBar() {
           column: value,
         },
       });
-      console.log(filters.order);
     }
     if (name === 'radio') {
       setFilters({
@@ -79,7 +78,6 @@ function SearchBar() {
           sort: value,
         },
       });
-      console.log(filters.order);
     }
   };
 
@@ -98,9 +96,6 @@ function SearchBar() {
         .filter((planet) => planet[column] !== 'unknown');
       PlanetsWithUnknownValues = orderedPlanetList
         .filter((planet) => planet[column] === 'unknown');
-      console.log(order);
-      console.log('planetWithNumericValies', planetWithNumericValies);
-      console.log('PlanetsWithUnknownValues', PlanetsWithUnknownValues);
     }
 
     if (sort === 'DESC') {
@@ -110,29 +105,13 @@ function SearchBar() {
         .filter((planet) => planet[column] !== 'unknown');
       PlanetsWithUnknownValues = orderedPlanetList
         .filter((planet) => planet[column] === 'unknown');
-      console.log(order);
-      console.log('planetWithNumericValies', planetWithNumericValies);
-      console.log('PlanetsWithUnknownValues', PlanetsWithUnknownValues);
-
-      console.log('orderedData', orderedData);
     }
 
     const finalOrederedPlanetList = [
       ...planetWithNumericValies, ...PlanetsWithUnknownValues,
     ];
-    console.log('finalOrderedPlanetList', finalOrederedPlanetList);
     setData(finalOrederedPlanetList);
   };
-
-  // useEffect(() => {
-
-  // }, [filters, data, setData, orderedData]);
-
-  // const expectedPlanetsWithNumericValues = ['Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Tatooine', 'Yavin IV'];
-  //   expect(actualPlanetsWithNumericValues).toEqual(expectedPlanetsWithNumericValues);
-
-  //   const expectedPlanetsWithUnknownValues = ['Dagobah', 'Hoth'];
-  //   expect(actualPlanetsWithUnknownValues).toEqual(expect.arrayContaining(expectedPlanetsWithUnknownValues));
 
   const valueRange = ['maior que', 'menor que', 'igual a'];
   const orderOptions = ['population', 'orbital_period',
@@ -240,7 +219,7 @@ function SearchBar() {
       <button
         type="button"
         name="ordenar"
-        data-testid="column-sort-button-filter"
+        data-testid="column-sort-button"
         onClick={ handleSortButton }
       >
         Ordenar
