@@ -83,7 +83,7 @@ function SearchBar() {
     }
   };
 
-  useEffect(() => {
+  const handleSortButton = () => {
     const { order } = filters;
     const { column, sort } = order;
 
@@ -121,8 +121,12 @@ function SearchBar() {
       ...planetWithNumericValies, ...PlanetsWithUnknownValues,
     ];
     console.log('finalOrderedPlanetList', finalOrederedPlanetList);
-    setData(orderedPlanetList);
-  }, [filters, data, setData, orderedData]);
+    setData(finalOrederedPlanetList);
+  };
+
+  // useEffect(() => {
+
+  // }, [filters, data, setData, orderedData]);
 
   // const expectedPlanetsWithNumericValues = ['Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Tatooine', 'Yavin IV'];
   //   expect(actualPlanetsWithNumericValues).toEqual(expectedPlanetsWithNumericValues);
@@ -237,7 +241,7 @@ function SearchBar() {
         type="button"
         name="ordenar"
         data-testid="column-sort-button-filter"
-        onClick={ handleSortFilters }
+        onClick={ handleSortButton }
       >
         Ordenar
       </button>
