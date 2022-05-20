@@ -93,7 +93,7 @@ function SearchBar() {
 
     if (sort === 'ASC') {
       orderedPlanetList = orderedPlanetList
-        .sort((a, b) => Number(b[column]) - Number(a[column]));
+        .sort((a, b) => Number(a[column]) - Number(b[column]));
       planetWithNumericValies = orderedPlanetList
         .filter((planet) => planet[column] !== 'unknown');
       PlanetsWithUnknownValues = orderedPlanetList
@@ -105,7 +105,7 @@ function SearchBar() {
 
     if (sort === 'DESC') {
       orderedPlanetList = orderedPlanetList
-        .sort((a, b) => Number(a[column] - b[column]));
+        .sort((a, b) => Number(b[column] - a[column]));
       planetWithNumericValies = orderedPlanetList
         .filter((planet) => planet[column] !== 'unknown');
       PlanetsWithUnknownValues = orderedPlanetList
