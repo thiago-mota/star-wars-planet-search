@@ -5,6 +5,8 @@ import starWarsAPI from '../services/Star Wars';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
+  const [orderedData, setOrderedData] = useState([]);
+
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
@@ -26,6 +28,7 @@ function MyProvider({ children }) {
   const getPlanets = async () => {
     const result = await starWarsAPI();
     setData(result);
+    setOrderedData(result);
   };
 
   useEffect(() => {
@@ -41,6 +44,8 @@ function MyProvider({ children }) {
     setFilteredPlanet,
     columnsOptions,
     setColumnsOptions,
+    orderedData,
+    setOrderedData,
   };
 
   return (

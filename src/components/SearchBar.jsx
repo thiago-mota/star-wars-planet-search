@@ -2,9 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function SearchBar() {
-  const { setFilters, filters, data,
-    setFilteredPlanet, setColumnsOptions,
-    columnsOptions, setData } = useContext(MyContext);
+  const { setFilters, filters, data, setFilteredPlanet, setColumnsOptions,
+    columnsOptions, orderedData, setOrderedData, setData } = useContext(MyContext);
 
   const activeFilters = () => {
     const { filterByNumericValues, currentFilter } = filters;
@@ -88,17 +87,42 @@ function SearchBar() {
     const { order } = filters;
     const { column, sort } = order;
 
-    let planetList = data;
+    let orderedPlanetList = orderedData;
+    let planetWithNumericValies = orderedPlanetList;
+    let PlanetsWithUnknownValues = orderedPlanetList;
 
     if (sort === 'ASC') {
-      planetList = planetList.sort((a, b) => a[column] - b[column]);
+      orderedPlanetList = orderedPlanetList
+        .sort((a, b) => Number(b[column]) - Number(a[column]));
+      planetWithNumericValies = orderedPlanetList
+        .filter((planet) => planet[column] !== 'unknown');
+      PlanetsWithUnknownValues = orderedPlanetList
+        .filter((planet) => planet[column] === 'unknown');
+      console.log(order);
+      console.log('planetWithNumericValies', planetWithNumericValies);
+      console.log('PlanetsWithUnknownValues', PlanetsWithUnknownValues);
     }
 
     if (sort === 'DESC') {
-      planetList = planetList.sort((a, b) => b[column] - a[column]);
+      orderedPlanetList = orderedPlanetList
+        .sort((a, b) => Number(a[column] - b[column]));
+      planetWithNumericValies = orderedPlanetList
+        .filter((planet) => planet[column] !== 'unknown');
+      PlanetsWithUnknownValues = orderedPlanetList
+        .filter((planet) => planet[column] === 'unknown');
+      console.log(order);
+      console.log('planetWithNumericValies', planetWithNumericValies);
+      console.log('PlanetsWithUnknownValues', PlanetsWithUnknownValues);
+
+      console.log('orderedData', orderedData);
     }
-    setData(planetList);
-  }, [filters, data, setData]);
+
+    const finalOrederedPlanetList = [
+      ...planetWithNumericValies, ...PlanetsWithUnknownValues,
+    ];
+    console.log('finalOrderedPlanetList', finalOrederedPlanetList);
+    setData(orderedPlanetList);
+  }, [filters, data, setData, orderedData]);
 
   // const expectedPlanetsWithNumericValues = ['Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Tatooine', 'Yavin IV'];
   //   expect(actualPlanetsWithNumericValues).toEqual(expectedPlanetsWithNumericValues);
