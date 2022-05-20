@@ -3,7 +3,8 @@ import MyContext from '../context/MyContext';
 
 function SearchBar() {
   const { setFilters, filters, data,
-    setFilteredPlanet, setColumnsOptions, columnsOptions } = useContext(MyContext);
+    setFilteredPlanet, setColumnsOptions,
+    columnsOptions, setData } = useContext(MyContext);
 
   const activeFilters = () => {
     const { filterByNumericValues, currentFilter } = filters;
@@ -60,7 +61,54 @@ function SearchBar() {
     setFilteredPlanet(data);
   };
 
+  const handleSortFilters = ({ target: { value, name } }) => {
+    if (name === 'column-sort') {
+      setFilters({
+        ...filters,
+        order: {
+          ...filters.order,
+          column: value,
+        },
+      });
+      console.log(filters.order);
+    }
+    if (name === 'radio') {
+      setFilters({
+        ...filters,
+        order: {
+          ...filters.order,
+          sort: value,
+        },
+      });
+      console.log(filters.order);
+    }
+  };
+
+  useEffect(() => {
+    const { order } = filters;
+    const { column, sort } = order;
+
+    let planetList = data;
+
+    if (sort === 'ASC') {
+      planetList = planetList.sort((a, b) => a[column] - b[column]);
+    }
+
+    if (sort === 'DESC') {
+      planetList = planetList.sort((a, b) => b[column] - a[column]);
+    }
+    setData(planetList);
+  }, [filters, data, setData]);
+
+  // const expectedPlanetsWithNumericValues = ['Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Tatooine', 'Yavin IV'];
+  //   expect(actualPlanetsWithNumericValues).toEqual(expectedPlanetsWithNumericValues);
+
+  //   const expectedPlanetsWithUnknownValues = ['Dagobah', 'Hoth'];
+  //   expect(actualPlanetsWithUnknownValues).toEqual(expect.arrayContaining(expectedPlanetsWithUnknownValues));
+
   const valueRange = ['maior que', 'menor que', 'igual a'];
+  const orderOptions = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
 
   return (
     <div>
@@ -119,6 +167,55 @@ function SearchBar() {
         onClick={ activeFilters }
       >
         Filtrar
+      </button>
+
+      <select
+        data-testid="column-sort"
+        name="column-sort"
+        onChange={ handleSortFilters }
+      >
+        { orderOptions.map((options) => (
+          <option
+            key={ options }
+          >
+            { options }
+          </option>
+        )) }
+      </select>
+
+      <label htmlFor="ascendente">
+        Ascendente
+        <input
+          value="ASC"
+          defaultChecked="checked"
+          name="radio"
+          type="radio"
+          id="ascendente"
+          data-testid="column-sort-input-asc"
+          onClick={ handleSortFilters }
+
+        />
+      </label>
+
+      <label htmlFor="descendente">
+        Descendente
+        <input
+          value="DESC"
+          name="radio"
+          type="radio"
+          id="descendente"
+          data-testid="column-sort-input-desc"
+          onClick={ handleSortFilters }
+        />
+      </label>
+
+      <button
+        type="button"
+        name="ordenar"
+        data-testid="column-sort-button-filter"
+        onClick={ handleSortFilters }
+      >
+        Ordenar
       </button>
 
       <button

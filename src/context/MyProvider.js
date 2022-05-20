@@ -13,7 +13,12 @@ function MyProvider({ children }) {
       comparison: 'maior que',
       value: 0,
     }],
+    order: {
+      column: 'population',
+      sort: 'ASC',
+    },
   });
+
   const [filteredPlanet, setFilteredPlanet] = useState([]);
   const [columnsOptions, setColumnsOptions] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
@@ -29,6 +34,7 @@ function MyProvider({ children }) {
 
   const contextValue = {
     data,
+    setData,
     filters,
     setFilters,
     filteredPlanet,
